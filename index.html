@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+		<title>Addict interpreter</title>
+		<script src="addict.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro' rel='stylesheet' type='text/css'>
+		<style>
+			* {
+				font-family: "Source Sans Pro", sans-serif;
+			}
+			
+			textarea, pre, span {
+				font-family: "Source Code Pro", monospace;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea id="code" rows=12 cols=50 placeholder="Code"></textarea>
+		<br>
+		<textarea id="input" rows=2 cols=50 placeholder="Input"></textarea>
+		<br>
+		<button id="run" onclick="run()">Run</button>
+		<!--<input type="checkbox" id="debug">Debug-->
+		<br>
+		<textarea id="output" rows=3 cols=50 placeholder="Output appears here."></textarea><br>
+		<p>More here soon.</p>
+	</body>
+</html>
