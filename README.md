@@ -10,6 +10,12 @@ Addict is a Turing tarpit based on [PRINDEAL](http://codegolf.stackexchange.com/
 
 A variable name matches the regex `/^[A-Za-z_]\w*$/`. All variables start out with a value of `0`, and can only contain non-negative integers.
 
+A variable can also have a dynamic name; for example, `abc[var]xyz`. The `[var]` returns the value of `var`; if `var` is currently `7`, this returns the variable `abc7xyz`.
+
+In aliases, sometimes you'll want to grab the `n`th argument, but `n` is non-constant. If variable `i` is already set to `n`, this can simply be done with `[i]`. Be careful with using numbers, though: `[1]` will not return the first argument; it will return the argument at index (value of 1st argument).
+
+You can also nest dynamic names: `a[b[c]]`
+
 ### Commands
 
 - `i x` - increment variable `x` by 1. Succeeds unless no arg is given.
@@ -32,7 +38,7 @@ This creates a new command called `commandname`. Whenever `commandname` is calle
 - If `command1` succeeded, run `command2`.
 - If `command1` failed, run `command3`.
 
-You can send arguments to the alias, too. The `n`th argument is called using `n` For example:
+You can send arguments to the alias, too. The `n`th argument is called using `n`. For example:
 
     a zero  # Sets the input variable to 0:
      d 1    #   Decrement the input var.
@@ -40,6 +46,18 @@ You can send arguments to the alias, too. The `n`th argument is called using `n`
      i _    #   Otherwise, return success.
 
 This can then be called as `zero myVar`, and it will set `myVar` to 0.
+
+**Note:** `0` is always `0`, no matter what you do to it.
+
+Additionally, you can select groups of arguments:
+
+     myFunc *    # Call myFunc with all arguments
+     myFunc 1*   # Call myFunc with all but the first argument
+     myFunc *1   # Call myFunc with all but the last argument
+     myFunc -1*  # Call myFunc with only the last argument
+     myFunc *-1  # Call myFunc with only the first argument
+     myFunc 1*1  # Call myFunc with all but the first and last arguments
+     # etc.
 
 ## Example programs
 
