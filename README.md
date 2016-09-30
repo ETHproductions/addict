@@ -22,6 +22,7 @@ You can also nest dynamic names: `a[b[c]]`
 - `d x` - decrement variable `x` by 1. Succeeds unless no arg is given, or the arg is already at 0.
 - `t x` - set variable `x` to the next charcode from input. Succeeds unless EOF. (Correctly handles Unicode chars above U+FFFF.)
 - `c x` - output variable `x` as a charcode. Succeeds unless no arg is given. (Correctly handles charcodes above 0xFFFF.)
+- `n x` - output variable `x` as a number. Succeeds unless no arg is given.
 
 ### Aliases
 

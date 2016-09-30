@@ -8,10 +8,11 @@ function run() {
     var input = ($("input").value.match(/[\uD800-\uDBFF][\uDC00-\DFFF]|[^]/g) || []).map(tCC);
     code = code.replace(/\s*(#.*)?\n/g, "\n");
     var aliases = {
-        i: function (name) { if (!name) return false; name = devar(name, []); variables[name] = (variables[name] || 0) + 1; return true; },
-        d: function (name) { if (!name || !variables[name = devar(name, [])]) return false; variables[name] -= 1; return true; },
-        c: function (name) { if (!name) return false; name = devar(name, []); $("output").value += fCC(variables[name] || 0); return true; },
-        t: function (name) { var c = input.shift(); if (!c) return false; name = devar(name, []); if (name) variables[name] = c; return true; },
+        i: function (name) { if (!name) return false; name = devar(name); variables[name] = (variables[name] || 0) + 1; return true; },
+        d: function (name) { if (!name || !variables[name = devar(name)]) return false; variables[name] -= 1; return true; },
+        n: function (name) { if (!name) return false; name = devar(name); $("output").value += variables[name] || 0; return true; },
+        c: function (name) { if (!name) return false; name = devar(name); $("output").value += fCC(variables[name] || 0); return true; },
+        t: function (name) { var c = input.shift(); if (!c) return false; name = devar(name); if (name) variables[name] = c; return true; },
     }, variables = { get 0 () { return 0; } };
     function devar (s) {
         while (/\[[^\[\]]+\]/.test(s))
@@ -32,7 +33,7 @@ function run() {
         if (!aliases[name]) return alert("Cannot call non-existant alias " + name);
         return aliases[name].apply(null, args);
     }
-    code = code.replace(/a (\w+)\n((?: -?\d*\*| [\w\[\]]+)*)\n((?: -?\d*\*-?\d*-?\d*| [\w\[\]]+)*)\n((?: -?\d*\*-?\d*| [\w\[\]]+)*)\n/g, function (_, name, s1, s2, s3) { if (/^[acdit]$/.test(name)) alert("Cannot redefine built-in " + name); else aliases[name] = function () { return alias(dearg(s1, arguments)) ? alias(dearg(s2, arguments)) : alias(dearg(s3, arguments)); }; return ""; });
+    code = code.replace(/a (\w+)\n((?: -?\d*\*| [\w\[\]]+)*)\n((?: -?\d*\*-?\d*-?\d*| [\w\[\]]+)*)\n((?: -?\d*\*-?\d*| [\w\[\]]+)*)\n/g, function (_, name, s1, s2, s3) { if (/^[acdint]$/.test(name)) alert("Cannot redefine built-in " + name); else aliases[name] = function () { return alias(dearg(s1, arguments)) ? alias(dearg(s2, arguments)) : alias(dearg(s3, arguments)); }; return ""; });
     code = code.split("\n");
     for (var i = 0; i < code.length; i++) if (code[i]) {
         if (/^([^a\W]\w*|a\w+)( [^\d\W]\w*)*$/.test(code[i]))
