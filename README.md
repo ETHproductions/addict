@@ -12,8 +12,6 @@ A variable name matches the regex `/^[A-Za-z_]\w*$/`. All variables start out wi
 
 A variable can also have a dynamic name; for example, `abc[var]xyz`. The `[var]` returns the value of `var`; if `var` is currently `7`, this returns the variable `abc7xyz`.
 
-In aliases, sometimes you'll want to grab the `n`th argument, but `n` is non-constant. If variable `i` is already set to `n`, this can simply be done with `[i]`. Be careful with using numbers, though: `[1]` will not return the first argument; it will return the argument at index (value of 1st argument).
-
 You can also nest dynamic names: `a[b[c]]`
 
 ### Commands
@@ -50,14 +48,17 @@ This can then be called as `zero myVar`, and it will set `myVar` to 0.
 
 **Note:** `0` is always `0`, no matter what you do to it.
 
+Sometimes you'll want to grab the `n`th argument, but `n` is a variable. This can simply be done with `[n]`. Be careful with using numbers, though: `[1]` will not return the first argument; it will return the argument at index [value of 1st argument].
+
 Additionally, you can select groups of arguments:
 
      myFunc *    # Call myFunc with all arguments
      myFunc 1*   # Call myFunc with all but the first argument
-     myFunc *1   # Call myFunc with all but the last argument
+     myFunc *1   # Call myFunc with only the first argument
      myFunc -1*  # Call myFunc with only the last argument
-     myFunc *-1  # Call myFunc with only the first argument
-     myFunc 1*1  # Call myFunc with all but the first and last arguments
+     myFunc *-1  # Call myFunc with all but the last argument
+     myFunc 1*3  # Call myFunc, excluding the first argument and anything after the third
+     myFunc 1*-1 # Call myFunc with all but the first and last arguments
      # etc.
 
 ## Example programs
